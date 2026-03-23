@@ -1,1 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Om Provisional Store</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
+<style>
+body {font-family: Arial; margin:0; background:#eef2f3;}
+header {background:#1abc9c; color:white; padding:20px; text-align:center;}
+.nav {background:#16a085; padding:10px; text-align:center;}
+.nav a {color:white; margin:10px; text-decoration:none;}
+
+.products {
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+ gap:15px;
+ padding:20px;
+}
+
+.card {
+ background:white;
+ padding:10px;
+ border-radius:10px;
+ text-align:center;
+ box-shadow:0 2px 5px rgba(0,0,0,0.1);
+}
+
+.card img {
+ width:100%;
+ height:120px;
+ object-fit:cover;
+}
+
+button {
+ background:#27ae60;
+ color:white;
+ padding:8px;
+ border:none;
+ cursor:pointer;
+ margin-top:5px;
+}
+
+#cart {
+ position:fixed;
+ right:10px;
+ top:10px;
+ background:white;
+ padding:10px;
+ border-radius:10px;
+ box-shadow:0 2px 5px rgba(0,0,0,0.2);
+}
+
+footer {
+ background:#1abc9c;
+ color:white;
+ text-align:center;
+ padding:15px;
+}
+</style>
+
+</head>
+
+<body>
+
+<header>
+<h1>Om Provisional Store</h1>
+<p>Groceries | Daily Needs | Toys</p>
+</header>
+
+<div class="nav">
+<a href="#">Home</a>
+<a href="#products">Products</a>
+<a href="#contact">Contact</a>
+</div>
+
+<div id="cart">
+🛒 Items: <span id="count">0</span><br>
+Total: ₹<span id="total">0</span><br>
+<button onclick="checkout()">Checkout</button>
+</div>
+
+<div id="products" class="products">
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1586201375761-83865001e31c">
+<h3>Rice 1kg</h3>
+<p>₹60</p>
+<button onclick="add('Rice 1kg',60)">Add</button>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1604908176997-4315f92f49b3">
+<h3>Flour</h3>
+<p>₹50</p>
+<button onclick="add('Flour',50)">Add</button>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1585238342024-78d387f4a707">
+<h3>Cooking Oil</h3>
+<p>₹120</p>
+<button onclick="add('Cooking Oil',120)">Add</button>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1587731556938-38755b4803a6">
+<h3>Sugar</h3>
+<p>₹45</p>
+<button onclick="add('Sugar',45)">Add</button>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1596464716127-f2a82984de30">
+<h3>Toy Car</h3>
+<p>₹150</p>
+<button onclick="add('Toy Car',150)">Add</button>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1583337130417-3346a1be7dee">
+<h3>Teddy Bear</h3>
+<p>₹300</p>
+<button onclick="add('Teddy Bear',300)">Add</button>
+</div>
+
+</div>
+
+<section id="contact" style="padding:20px; text-align:center;">
+<h2>Contact</h2>
+<p>📞 9105012459</p>
+<p>📍 Babail Buzurg, Saharanpur</p>
+
+<a href="https://maps.app.goo.gl/DHKipbaKdjiPPAMM8?g_st=ic" target="_blank">
+📍 Open in Google Maps
+</a>
+
+<br><br>
+
+<h3>💳 Pay via UPI</h3>
+<p>UPI ID: <b>9105012459@ybl</b></p>
+
+</section>
+
+<footer>
+<p>© 2026 Om Provisional Store</p>
+</footer>
+
+<script>
+let cart = [];
+let total = 0;
+
+function add(name, price){
+ cart.push(name);
+ total += price;
+ document.getElementById("count").innerText = cart.length;
+ document.getElementById("total").innerText = total;
+}
+
+function checkout(){
+ let phone = "919105012459";
+ let upi = "9105012459@ybl";
+ let msg = "Order: " + cart.join(", ") + 
+           " Total ₹" + total + 
+           " Pay on UPI: " + upi;
+
+ window.open("https://wa.me/" + phone + "?text=" + encodeURIComponent(msg));
+}
+</script>
+
+</body>
+</html>
