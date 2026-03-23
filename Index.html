@@ -58,6 +58,7 @@ button {
  width:100%;
  margin-top:5px;
  border-radius:5px;
+ cursor:pointer;
 }
 
 #cart {
@@ -96,15 +97,15 @@ button {
 let cart = [];
 let total = 0;
 
+/* PRODUCTS */
 let products = [
-{name:"Rice",price:60,img:"https://share.google/LVQCmEl02PEMZN4ZE"},
+{name:"Rice",price:60,img:"https://images.unsplash.com/photo-1604909052743-94e0a1a0a0a1"},
 {name:"Wheat Flour",price:50,img:"https://images.unsplash.com/photo-1608198093002-ad4e005484ec"},
 {name:"Cooking Oil",price:120,img:"https://images.unsplash.com/photo-1615485737457-1c3ecb9e3f74"},
 {name:"Sugar",price:45,img:"https://images.unsplash.com/photo-1587049352851-8d4e89133924"},
 {name:"Milk",price:30,img:"https://images.unsplash.com/photo-1625944230945-1b7dd3b949ab"},
 {name:"Biscuits",price:20,img:"https://images.unsplash.com/photo-1604908177225-3b6f0cde2d2b"},
 {name:"Tea",price:100,img:"https://images.unsplash.com/photo-1512568400610-62da28bc8a13"},
-{name:"Salt",price:20,img:"https://images.unsplash.com/photo-1587049352851-8d4e89133924"},
 {name:"Soap",price:35,img:"https://images.unsplash.com/photo-1581578731548-c64695cc6952"},
 {name:"Shampoo",price:120,img:"https://images.unsplash.com/photo-1596462502278-27bfdc403348"},
 {name:"Toothpaste",price:90,img:"https://images.unsplash.com/photo-1588776814546-ec7e0a0b2d5a"},
@@ -141,32 +142,50 @@ function searchProduct(){
 
 function add(n,p){
  cart.push(n);
- total+=p;
- document.getElementById("count").innerText=cart.length;
- document.getElementById("total").innerText=total;
+ total += p;
+ document.getElementById("count").innerText = cart.length;
+ document.getElementById("total").innerText = total;
 }
 
 function payNow(){
  window.location.href="upi://pay?pa=9105012459@ybl&pn=OmStore&am="+total+"&cu=INR";
 }
 
+/* 🚀 FINAL ORDER SYSTEM */
 function order(){
+
  let name = prompt("Enter your name:");
+ let phone = prompt("Enter your mobile number:");
+ let address = prompt("Enter your full address:");
+
+ if(!name || !phone || !address){
+   alert("Please fill all details!");
+   return;
+ }
 
  let data = {
    name: name,
+   phone: phone,
+   address: address,
    items: cart.join(", "),
    total: total
  };
 
+ // Google Sheet Save (PASTE YOUR SCRIPT URL HERE)
  fetch("YOUR_SCRIPT_URL_HERE", {
    method: "POST",
    body: JSON.stringify(data)
  });
 
- let phone="919105012459";
- let msg="Name: "+name+" Order: "+cart.join(", ")+" Total ₹"+total;
- window.open("https://wa.me/"+phone+"?text="+encodeURIComponent(msg));
+ let msg =
+ "🛒 New Order\n\n" +
+ "👤 Name: " + name + "\n" +
+ "📱 Phone: " + phone + "\n" +
+ "🏠 Address: " + address + "\n\n" +
+ "📦 Items: " + cart.join(", ") + "\n" +
+ "💰 Total: ₹" + total;
+
+ window.open("https://wa.me/919105012459?text=" + encodeURIComponent(msg));
 }
 </script>
 
