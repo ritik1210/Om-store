@@ -7,12 +7,20 @@
 <style>
 body {margin:0;font-family:sans-serif;background:#f1f3f6;}
 
-header {background:#2874f0;color:white;padding:12px;text-align:center;font-size:20px;}
+header {
+ background:#2874f0;
+ color:white;
+ padding:12px;
+ text-align:center;
+ font-size:20px;
+ font-weight:bold;
+}
 
 .search {
  padding:10px;
  text-align:center;
 }
+
 .search input {
  width:90%;
  padding:10px;
@@ -85,12 +93,13 @@ button {
 </div>
 
 <script>
-let cart=[], total=0;
+let cart = [];
+let total = 0;
 
 let products = [
-{name:"Rice",price:60,img:"https://images.unsplash.com/photo-1586201375761-83865001e31c"},
-{name:"Flour",price:50,img:"https://images.unsplash.com/photo-1608198093002-ad4e005484ec"},
-{name:"Oil",price:120,img:"https://images.unsplash.com/photo-1615485737457-1c3ecb9e3f74"},
+{name:"Rice",price:60,img:"https://images.unsplash.com/photo-1604909052743-94e0a1a0a0a1"},
+{name:"Wheat Flour",price:50,img:"https://images.unsplash.com/photo-1608198093002-ad4e005484ec"},
+{name:"Cooking Oil",price:120,img:"https://images.unsplash.com/photo-1615485737457-1c3ecb9e3f74"},
 {name:"Sugar",price:45,img:"https://images.unsplash.com/photo-1587049352851-8d4e89133924"},
 {name:"Milk",price:30,img:"https://images.unsplash.com/photo-1625944230945-1b7dd3b949ab"},
 {name:"Biscuits",price:20,img:"https://images.unsplash.com/photo-1604908177225-3b6f0cde2d2b"},
@@ -142,7 +151,22 @@ function payNow(){
 }
 
 function order(){
- window.open("https://wa.me/919105012459?text="+encodeURIComponent("Order: "+cart.join(", ")+" Total ₹"+total));
+ let name = prompt("Enter your name:");
+
+ let data = {
+   name: name,
+   items: cart.join(", "),
+   total: total
+ };
+
+ fetch("YOUR_SCRIPT_URL_HERE", {
+   method: "POST",
+   body: JSON.stringify(data)
+ });
+
+ let phone="919105012459";
+ let msg="Name: "+name+" Order: "+cart.join(", ")+" Total ₹"+total;
+ window.open("https://wa.me/"+phone+"?text="+encodeURIComponent(msg));
 }
 </script>
 
