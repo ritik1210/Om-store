@@ -10,13 +10,15 @@
             --secondary: #ff9f00;
             --accent: #ff6a00;
             --bg: #f1f3f6;
+            --whatsapp: #25D366;
+            --cod: #546e7a;
         }
 
         body {
             margin: 0;
             font-family: 'Arial', sans-serif;
             background: var(--bg);
-            padding-bottom: 100px;
+            padding-bottom: 120px;
         }
 
         header {
@@ -45,7 +47,29 @@
             outline: none;
         }
 
-        /* OM LOGO DESIGN */
+        /* CUSTOM ITEM BOX - SPECIAL LOOK */
+        .custom-box {
+            background: #e3f2fd;
+            margin: 15px;
+            padding: 20px;
+            border-radius: 12px;
+            border: 2px dashed #1e88e5;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .custom-box h4 { margin: 0 0 10px 0; color: #1565c0; font-size: 16px; }
+
+        .custom-box input {
+            width: 85%;
+            padding: 12px;
+            border: 1px solid #90caf9;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            font-size: 15px;
+        }
+
+        /* PRODUCT CARDS */
         .product-logo-circle {
             width: 75px;
             height: 75px;
@@ -57,7 +81,6 @@
             align-items: center;
             justify-content: center;
             border: 2px solid var(--secondary);
-            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
         }
 
         .logo-om { font-size: 32px; color: #ff6a00; font-weight: bold; }
@@ -86,19 +109,9 @@
             border-radius: 5px;
             font-weight: bold;
             width: 100%;
-            cursor: pointer;
         }
 
-        /* PAYMENT INFO BOX */
-        .payment-box {
-            background: #e8f5e9;
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid #4caf50;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-
+        /* CART PANEL */
         #cartBtn {
             position: fixed;
             bottom: 20px;
@@ -109,8 +122,8 @@
             padding: 15px 25px;
             border-radius: 50px;
             font-weight: bold;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
             z-index: 10000;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
 
         #cartPanel {
@@ -118,7 +131,7 @@
             bottom: -100%;
             left: 0;
             width: 100%;
-            height: 85%;
+            height: 90%;
             background: white;
             border-radius: 25px 25px 0 0;
             z-index: 10001;
@@ -133,84 +146,78 @@
         .overlay { position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5); display:none; z-index:10000; }
         .overlay.active { display:block; }
 
-        .cart-list { flex-grow: 1; overflow-y: auto; }
+        .cart-list { flex-grow: 1; overflow-y: auto; margin-top: 10px; }
         .cart-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #eee; }
-        .btn-del { color: red; border: none; background: none; font-weight: bold; padding: 5px; }
+        
+        .order-actions { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
+        .btn-online { background: var(--whatsapp); color:white; padding:15px; border-radius:10px; border:none; font-weight:bold; font-size: 16px; }
+        .btn-cod { background: var(--cod); color:white; padding:15px; border-radius:10px; border:none; font-weight:bold; font-size: 16px; }
 
     </style>
 </head>
 <body>
 
-<header>
-    <div style="font-size: 22px; font-weight: bold;">ॐ Om Provisional Store</div>
-</header>
+<header><div style="font-size: 22px; font-weight: bold;">ॐ Om Provisional Store</div></header>
 
 <div class="search-container">
-    <input type="text" id="search" placeholder="Saman khojiye..." onkeyup="searchProduct()">
+    <input type="text" id="search" placeholder="Saman khojiye (Dal, Sugar, Maggie...)" onkeyup="searchProduct()">
+</div>
+
+<div class="custom-box">
+    <h4>📋 Jo list mein nahi hai, yahan likhein:</h4>
+    <input type="text" id="customInput" placeholder="E.g. 2kg Dahi, Matchbox, etc.">
+    <button onclick="addCustom()" style="background:#1e88e5; color:white; border:none; padding:10px 20px; border-radius:8px; font-weight:bold; cursor:pointer;">List mein jodein (+)</button>
 </div>
 
 <div id="products" class="products"></div>
 
 <div id="overlay" class="overlay" onclick="closeCart()"></div>
-
 <button id="cartBtn" onclick="openCart()">🛒 Cart (<span id="count">0</span>)</button>
 
 <div id="cartPanel">
     <div style="display:flex; justify-content:space-between; align-items:center;">
-        <h2 style="margin:0;">Apka Order</h2>
-        <button onclick="closeCart()" style="font-size:30px; border:none; background:none; cursor:pointer;">&times;</button>
+        <h2 style="margin:0;">Apka Order Summary</h2>
+        <button onclick="closeCart()" style="font-size:35px; border:none; background:none; cursor:pointer;">&times;</button>
     </div>
     <hr>
-    
-    <div class="payment-box">
-        <strong style="color:#2e7d32;">💰 UPI Payment Karein:</strong><br>
-        <span style="font-size: 18px; font-weight: bold; color: #1565c0;">9105012459@ybl</span><br>
-        <small>(Google Pay, PhonePe, Paytm Sab chalega)</small>
-    </div>
-
     <div id="cartList" class="cart-list"></div>
-    
-    <div style="font-size:20px; font-weight:bold; margin: 15px 0; display:flex; justify-content:space-between;">
-        <span>Total Amount:</span>
+    <div style="font-size:18px; font-weight:bold; margin:10px 0; display:flex; justify-content:space-between;">
+        <span>Total Bill Amount:</span>
         <span>₹<span id="total">0</span></span>
     </div>
-
-    <button onclick="order()" style="background:#25D366; color:white; border:none; padding:15px; width:100%; border-radius:10px; font-weight:bold; font-size:18px; cursor:pointer;">
-        Order Karein aur Pay Karein
-    </button>
+    <div style="background:#fff3e0; padding:10px; border-radius:8px; text-align:center; font-size:14px; margin-bottom:10px; border: 1px solid #ffe0b2;">
+        <strong>UPI ID:</strong> 9105012459@ybl
+    </div>
+    <div class="order-actions">
+        <button class="btn-online" onclick="processOrder('Online')">📱 Online Pay Karke Order Karein</button>
+        <button class="btn-cod" onclick="processOrder('COD')">💵 Cash on Delivery (COD)</button>
+    </div>
 </div>
 
 <script>
 let cart = {};
+let customItems = [];
 let total = 0;
 
 const products = [
-    {id: 1, name: "Premium Rice (1kg)", price: 60},
-    {id: 2, name: "Wheat Flour (5kg)", price: 245},
+    {id: 1, name: "Premium Rice (1kg)", price: 100},
+    {id: 2, name: "Wheat Flour (5kg)", price: 200},
     {id: 3, name: "Sugar (1kg)", price: 45},
-    {id: 4, name: "Salt (Namak)", price: 20},
-    {id: 5, name: "Maggie (Masala)", price: 14},
-    {id: 6, name: "Tedha Medha", price: 20},
-    {id: 7, name: "Tata Chai (250g)", price: 110},
-    {id: 8, name: "Barumal Chai", price: 95},
-    {id: 9, name: "Kuttu Aata (500g)", price: 80},
-    {id: 10, name: "Samak Chawal", price: 90},
-    {id: 11, name: "Toor Dal (1kg)", price: 160},
-    {id: 12, name: "Bhooni Cholai", price: 40}
+    {id: 4, name: "Tata Salt (Namak)", price: 30},
+    {id: 5, name: "Maggie", price: 14},
+    {id: 6, name: "Tedha Medha", price: 05},
+    {id: 7, name: "Tata Chai (100g)", price: 35},
+    {id: 8, name: "Masur Dal (1kg)", price: 120},
+    {id: 9, name: "Kuttu Aata (500g)", price: 60},
+    {id: 10, name: "Bhooni Cholai (250g)", price: 35}
 ];
 
 function display(list) {
     let html = "";
     list.forEach(p => {
-        html += `
-        <div class="card">
-            <div class="product-logo-circle"><span class="logo-om">ॐ</span><span class="logo-name">OM STORE</span></div>
-            <h4>${p.name}</h4>
-            <p>₹${p.price}</p>
-            <button class="btn-add" onclick="addToCart(${p.id})">Add to Cart</button>
-        </div>`;
+        html += `<div class="card"><div class="product-logo-circle"><span class="logo-om">ॐ</span><span class="logo-name">OM STORE</span></div><h4>${p.name}</h4><p>₹${p.price}</p><button class="btn-add" onclick="addToCart(${p.id})">Add Item</button></div>`;
     });
-    document.getElementById("products").innerHTML = html || '<p style="grid-column:1/-1; text-align:center;">Saman nahi mila!</p>';
+    document.getElementById("products").innerHTML = html;
 }
 display(products);
 
@@ -226,50 +233,74 @@ function addToCart(pid) {
     updateUI();
 }
 
-function removeItem(pid) {
-    delete cart[pid];
+function addCustom() {
+    let val = document.getElementById("customInput").value.trim();
+    if(!val) return alert("Pehle saman ka naam likhein!");
+    customItems.push(val);
+    document.getElementById("customInput").value = "";
     updateUI();
+    alert("Item list mein niche add ho gaya hai!");
 }
+
+function removeItem(pid) { delete cart[pid]; updateUI(); }
+function removeCustom(index) { customItems.splice(index, 1); updateUI(); }
 
 function updateUI() {
     let count = 0; total = 0;
     let listHTML = "";
     for(let id in cart) {
-        count += cart[id].qty;
-        total += (cart[id].price * cart[id].qty);
-        listHTML += `
-            <div class="cart-item">
-                <span>${cart[id].name} (x${cart[id].qty})</span>
-                <span>₹${cart[id].price * cart[id].qty} <button class="btn-del" onclick="removeItem(${id})">✖</button></span>
-            </div>`;
+        count += cart[id].qty; total += (cart[id].price * cart[id].qty);
+        listHTML += `<div class="cart-item"><span>${cart[id].name} (x${cart[id].qty})</span><span>₹${cart[id].price * cart[id].qty} <button onclick="removeItem(${id})" style="color:red; border:none; background:none; font-weight:bold; cursor:pointer;">✖</button></span></div>`;
     }
+    customItems.forEach((item, index) => {
+        count++;
+        listHTML += `<div class="cart-item"><span>📝 ${item}</span><span><button onclick="removeCustom(${index})" style="color:red; border:none; background:none; font-weight:bold; cursor:pointer;">✖</button></span></div>`;
+    });
     document.getElementById("count").innerText = count;
     document.getElementById("total").innerText = total;
-    document.getElementById("cartList").innerHTML = listHTML || '<p style="text-align:center; color:gray; margin-top:20px;">Cart khali hai...</p>';
+    document.getElementById("cartList").innerHTML = listHTML || '<p style="text-align:center; color:gray; margin-top:20px;">Abhi koi saman nahi juda hai.</p>';
 }
 
 function openCart() { document.getElementById("cartPanel").classList.add("active"); document.getElementById("overlay").classList.add("active"); }
 function closeCart() { document.getElementById("cartPanel").classList.remove("active"); document.getElementById("overlay").classList.remove("active"); }
 
-function order() {
-    if(total === 0) return alert("Pehle kuch saman add karein!");
-    
+function processOrder(method) {
+    if(total === 0 && customItems.length === 0) return alert("Pehle kuch saman add karein!");
     let name = prompt("Aapka Naam:");
-    let address = prompt("Delivery ka Pata (Address):");
-    if(!name || !address) return;
+    let phone = prompt("Mobile Number:");
+    let address = prompt("Delivery Pata (Address):");
+    if(!name || !phone || !address) return;
 
-    let msg = `🛒 *NAYA ORDER - Om Store*\n\n*Grahak:* ${name}\n*Pata:* ${address}\n\n*Saman:*\n`;
-    for(let id in cart) { msg += `• ${cart[id].name} (Qty: ${cart[id].qty}) - ₹${cart[id].price * cart[id].qty}\n`; }
+    // Time-based Greeting Logic
+    let hour = new Date().getHours();
+    let greeting = (hour >= 19 || hour < 5) ? "Dhanyawad, Shubh Ratri. Jai Shree Ram! 🙏" : "Dhanyawad, Aapka din shubh jaye. Jai Shree Ram! 🙏";
+
+    let msg = `🛒 *NAYA ORDER - Om Store*\n\n`;
+    msg += `*Grahak:* ${name}\n`;
+    msg += `*Phone:* ${phone}\n`;
+    msg += `*Pata:* ${address}\n\n`;
+    msg += `*Saman Ki List:*\n`;
+    for(let id in cart) { msg += `• ${cart[id].name} (x${cart[id].qty}) - ₹${cart[id].price * cart[id].qty}\n`; }
+    if(customItems.length > 0) {
+        msg += `\n*Alag se likha saman:*\n`;
+        customItems.forEach(item => msg += `• ${item}\n`);
+    }
+    msg += `\n*TOTAL BILL: ₹${total}*`;
     
-    msg += `\n*TOTAL: ₹${total}*`;
-    msg += `\n\n✅ *Payment Information:*\nMaine UPI (9105012459@ybl) par ₹${total} pay kar diye hain. Kripya screenshot check karein.`;
+    if(method === 'Online') {
+        msg += `\n\n✅ *Payment Status:* Maine ₹${total} Online (9105012459@ybl) pay kar diye hain.`;
+    } else {
+        msg += `\n\n💵 *Payment Status:* Cash on Delivery (Ghar par paise dunga).`;
+    }
 
-    alert("Bhaiya, WhatsApp par message bhejne ke baad Payment ka Screenshot zaroor bhej dena!");
+    msg += `\n\n${greeting}`;
+
     window.open("https://wa.me/919105012459?text=" + encodeURIComponent(msg));
 }
 </script>
 </body>
 </html>
+
 
 
 
