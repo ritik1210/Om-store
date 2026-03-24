@@ -200,17 +200,71 @@ let customItems = [];
 let total = 0;
 
 const products = [
+    // --- RASHAN / BASICS ---
     {id: 1, name: "Premium Rice (1kg)", price: 100},
-    {id: 2, name: "Wheat Flour (5kg)", price: 200},
-    {id: 3, name: "Sugar (1kg)", price: 45},
-    {id: 4, name: "Tata Salt (Namak)", price: 30},
-    {id: 5, name: "Maggie", price: 14},
-    {id: 6, name: "Tedha Medha", price: 05},
-    {id: 7, name: "Tata Chai (100g)", price: 35},
-    {id: 8, name: "Masur Dal (1kg)", price: 120},
-    {id: 9, name: "Kuttu Aata (500g)", price: 60},
-    {id: 10, name: "Bhooni Cholai (250g)", price: 35}
+    {id: 2, name: "Wheat Flour / Aata (5kg)", price: 180},
+    {id: 3, name: "Sugar / Chini (1kg)", price: 45},
+    {id: 4, name: "Tata Salt (1kg)", price: 30},
+    {id: 5, name: "Masur Dal (1kg)", price: 120},
+    {id: 6, name: "Moong Dal (1kg)", price: 130},
+    {id: 7, name: "Chana Dal (1kg)", price: 100},
+    {id: 8, name: "Kabuli Chana (1kg)", price: 120},
+    {id: 9, name: "Mustard Oil (Moti 1L)", price: 175},
+    {id: 10, name: "Refined Oil (Fortune 1L)", price: 150},
+
+    // --- CHAI & NASHTA ---
+    {id: 11, name: "Tata Chai (100g)", price: 35},
+    {id: 12, name: "Dalma tea Gold (250g)", price: 110},
+    {id: 13, name: "Coffee (1g)", price: 02},
+    {id: 14, name: "Maggie", price: 14},
+    {id: 15, name: "Yippee Noodles", price: 12},
+    {id: 16, name: "Parle 20-20 cookies Biscuits", price: 10},
+    {id: 17, name: "Parle-G ", price: 05},
+    {id: 18, name: "Good Day Cookies", price: 10},
+    {id: 19, name: "Rusk", price: 10},
+
+    // --- SNACKS & NAMKEEN ---
+    {id: 20, name: "Tedha Medha", price: 05},
+    {id: 21, name: "Aloo Bhujia ", price: 05},
+    {id: 22, name: "Moong Dal Namkeen", price: 05},
+    {id: 23, name: "Uncle Chips (Blue)", price: 05},
+    {id: 24, name: "Kurkure (Masala)", price: 05},
+    {id: 25, name: "Lays (Cream & Onion)", price: 05},
+
+    // --- MASALE ---
+    {id: 26, name: "Haldi Powder (100g)", price: 30},
+    {id: 27, name: "Lal Mirch (100g)", price: 45},
+    {id: 28, name: "Dhaniya Powder (100g)", price: 25},
+    {id: 29, name: "Garam Masala (50g)", price: 27},
+    {id: 30, name: "Heeng (Chota pack)", price: 10},
+
+    // --- POOJA & VRAT KA SAMAN ---
+    {id: 31, name: "Kuttu Aata (500g)", price: 60},
+    {id: 32, name: "Samak Chawal (1kg)", price: 80},
+    {id: 33, name: "Sabudana (500g)", price: 50},
+    {id: 34, name: "Bhooni Cholai (250g)", price: 35},
+    {id: 35, name: "Agarbatti (Pack)", price: 10},
+    {id: 36, name: "Matchbox (per box)", price: 05},
+
+    // --- CLEANING & PERSONAL CARE ---
+    {id: 37, name: "Dettol Soap (Set)", price: 40},
+    {id: 38, name: "Lux Soap (Set)", price: 35},
+    {id: 39, name: "Lifebuoy Soap (Set)", price: 40},
+    {id: 40, name: "Nip Bar (Set)", price: 30},
+    {id: 41, name: "Vidisa Powder (1kg)", price: 70},
+    {id: 42, name: "Surf Excel (70g)", price: 10},
+    {id: 43, name: "Clinic Plus (Sachet)", price: 1},
+    {id: 44, name: "Colgate Paste", price: 76},
+    {id: 45, name: "Harpic (Bada)", price: 80},
+
+    // --- OTHERS ---
+    {id: 46, name: "shakkar(1kg)", price: 60},
+    {id: 47, name: "Soyabean (100g)", price: 18},
+    {id: 48, name: "Besan (500g)", price: 50},
+    {id: 49, name: "Maida (500g)", price:25},
+    {id: 50, name: "Suji (500g)", price: 45}
 ];
+
 
 function display(list) {
     let html = "";
