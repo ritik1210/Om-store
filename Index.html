@@ -31,6 +31,28 @@
             top: 0;
             z-index: 1001;
             box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            display: flex; /* logo alignment ke liye */
+            justify-content: center; /* logo alignment ke liye */
+            align-items: center; /* logo alignment ke liye */
+        }
+
+        /* LOGO STYLING */
+        .logo-container {
+            display: flex;
+            align-items: center;
+            border-radius: 50%;
+            padding: 10px;
+            background-color: #fff;
+            margin-right: 10px;
+        }
+
+        .logo-icon {
+            color: var(--primary);
+            font-size: 24px;
+        }
+
+        .store-name {
+            font-size: 20px;
         }
 
         /* SEARCH BAR */
@@ -76,7 +98,7 @@
         .card img {
             width: 100%;
             height: 120px;
-            object-fit: contain;
+            object-fit: contain; /* real images ke liye */
             border-radius: 8px;
             margin-bottom: 10px;
         }
@@ -197,7 +219,11 @@
 </head>
 <body>
 
-<header>🛒 Om Provisional Store</header>
+<header>
+    <div class="logo-container">
+        <span class="logo-icon">&#128722;</span> <span class="store-name">Om Provisional Store</span>
+        <span class="logo-icon">&#128717;</span> </div>
+</header>
 
 <div class="search-container">
     <input type="text" id="search" placeholder="Dal, Rice, Chips... khojiye" onkeyup="searchProduct()">
@@ -232,18 +258,19 @@
 let cart = {}; // Using object to track quantities
 let total = 0;
 
-// Updated Product List with High Quality Placeholder Images
+// Updated Product List with Realistic Stock Images
 const products = [
-    {id: 1, name: "Premium Rice", price: 60, stock: true, img: "https://cdn-icons-png.flaticon.com/512/3014/3014830.png"},
-    {id: 2, name: "Wheat Flour (Aata)", price: 50, stock: true, img: "https://cdn-icons-png.flaticon.com/512/4632/4632559.png"},
-    {id: 3, name: "Sugar", price: 45, stock: true, img: "https://cdn-icons-png.flaticon.com/512/5029/5029253.png"},
-    {id: 4, name: "Salt", price: 20, stock: true, img: "https://cdn-icons-png.flaticon.com/512/2821/2821941.png"},
-    {id: 5, name: "Toor Dal", price: 120, stock: true, img: "https://cdn-icons-png.flaticon.com/512/2619/2619553.png"},
-    {id: 6, name: "Moong Dal", price: 110, stock: false, img: "https://cdn-icons-png.flaticon.com/512/2619/2619553.png"},
-    {id: 7, name: "Kurkure", price: 20, stock: true, img: "https://cdn-icons-png.flaticon.com/512/2553/2553642.png"},
-    {id: 8, name: "Lays Chips", price: 20, stock: true, img: "https://cdn-icons-png.flaticon.com/512/2553/2553642.png"},
-    {id: 9, name: "Bath Soap", price: 35, stock: true, img: "https://cdn-icons-png.flaticon.com/512/2913/2913462.png"},
-    {id: 10, name: "Toy Car", price: 150, stock: true, img: "https://cdn-icons-png.flaticon.com/512/3082/3082042.png"}
+    {id: 1, name: "Premium Rice", price: 60, stock: true, img: "https://images.unsplash.com/photo-1594916800761-00e95655513d?q=80&w=400&auto=format&fit=crop"},
+    {id: 2, name: "Wheat Flour (Aata)", price: 50, stock: true, img: "https://images.unsplash.com/photo-1606118029524-f7c8d9e8023e?q=80&w=400&auto=format&fit=crop"},
+    {id: 3, name: "Sugar", price: 45, stock: true, img: "https://images.unsplash.com/photo-1591113061118-a6d96a750567?q=80&w=400&auto=format&fit=crop"},
+    {id: 4, name: "Salt", price: 20, stock: true, img: "https://images.unsplash.com/photo-1596791691238-66487e497f5f?q=80&w=400&auto=format&fit=crop"},
+    {id: 5, name: "Toor Dal", price: 120, stock: true, img: "https://images.unsplash.com/photo-1591113061118-a6d96a750567?q=80&w=400&auto=format&fit=crop"},
+    {id: 6, name: "Moong Dal", price: 110, stock: false, img: "https://images.unsplash.com/photo-1614772186985-e3d1796191c4?q=80&w=400&auto=format&fit=crop"},
+    {id: 7, name: "Kurkure", price: 20, stock: true, img: "https://images.unsplash.com/photo-1628173426868-e4b986b245a9?q=80&w=400&auto=format&fit=crop"},
+    {id: 8, name: "Lays Chips", price: 20, stock: true, img: "https://images.unsplash.com/photo-1619688481269-e7d6928b5e98?q=80&w=400&auto=format&fit=crop"},
+    {id: 9, name: "Bath Soap", price: 35, stock: true, img: "https://images.unsplash.com/photo-1611080312669-e6c986c5a0f5?q=80&w=400&auto=format&fit=crop"},
+    {id: 10, name: "Shampoo", price: 120, stock: true, img: "https://images.unsplash.com/photo-1608248598460-66e632049e69?q=80&w=400&auto=format&fit=crop"},
+    {id: 11, name: "Toy Car", price: 150, stock: true, img: "https://images.unsplash.com/photo-1561037404-61cd46aa615b?q=80&w=400&auto=format&fit=crop"}
 ];
 
 function display(list) {
